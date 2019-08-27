@@ -15,7 +15,7 @@ defmodule Ueberauth.Strategy.CAS.API do
   def validate_ticket(ticket, conn) do
     HTTPoison.get(validate_url(), [], 
       params: %{ticket: ticket, service: callback_url(conn)},
-      hackney: [{:ssl_options, [{:cacertfile, "priv/cert/ipa/pem"}]}]
+      hackney: [{:ssl_options, [{:cacertfile, "priv/cert/ipa.pem"}]}]
     )
     |> handle_validate_ticket_response()
   end
