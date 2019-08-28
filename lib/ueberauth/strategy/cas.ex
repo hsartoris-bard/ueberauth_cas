@@ -95,8 +95,8 @@ defmodule Ueberauth.Strategy.CAS do
   def credentials(conn) do
     %Credentials{
       expires: false,
-      token: conn.private.cas_ticket,
-      other: conn.private.cas_user.roles,
+      token: conn.private.cas_ticket
+      #other: conn.private.cas_user.roles,
     }
   end
 
