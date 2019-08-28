@@ -14,14 +14,13 @@ defmodule Ueberauth.Strategy.CAS.User do
   #  eduPersonPrincipalName: nil,
   #  nickname: nil
   defstruct [
-    user: nil,
+    uid: nil,
     employeeType: nil,
     mail: nil,
     givenName: nil,
     sn: nil,
     cn: nil,
-    eduPersonPrincipalName: nil,
-    uid: nil
+    eduPersonPrincipalName: nil
   ]
 
   defp attr_map do
@@ -40,21 +39,22 @@ defmodule Ueberauth.Strategy.CAS.User do
   alias Ueberauth.Strategy.CAS.User
 
   def from_xml(body) do
-    #opts = assign_attrs(%{}, body, Map.keys(attr_map()))
-    #opts = %{user: get_attr(body, "cas:user")}
-    #opts |> IO.inspect opts
-    opts = Enum.map(attr_map(),
-      fn ({key, value}) ->
-        {key, get_attr(body, value)}
+    opts = Enum.map(
+      Map.from_struct(User),
+      fn ({attr, _}) ->
+        {
+          attr, 
+          body |> xpath(~x"///cas:#{Atom.to_string(attr)}/text()")
+        }
       end
     )
 
     IO.inspect(opts)
     
-    %User{}
+    %User{} |> struct(opts)
     #|> set_attrs(body)
     #|> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
-    |> struct(opts)
+    #|> struct(opts)
 
     #%User{}
     #|> set_name(body)
