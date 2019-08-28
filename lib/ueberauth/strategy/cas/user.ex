@@ -56,14 +56,14 @@ defmodule Ueberauth.Strategy.CAS.User do
   end
 
   defp set_attrs(user, body) do
+    %User{user | user: get_attr(body, "/cas:uid")}
+    %User{user | employeeType: get_attr(body, "/cas:employeeType")}
+    %User{user | mail: get_attr(body, "/cas:mail")}
+    %User{user | givenName: get_attr(body, "/cas:givenName")}
+    %User{user | sn: get_attr(body, "/cas:sn")}
+    %User{user | cn: get_attr(body, "/cas:cn")}
+    %User{user | eduPersonPrincipalName: get_attr(body, "/cas:eduPersonPrincipalName")}
     user
-    |> %User{user | user: get_attr(body, "/cas:uid")}
-    |> %User{user | employeeType: get_attr(body, "/cas:employeeType")}
-    |> %User{user | mail: get_attr(body, "/cas:mail")}
-    |> %User{user | givenName: get_attr(body, "/cas:givenName")}
-    |> %User{user | sn: get_attr(body, "/cas:sn")}
-    |> %User{user | cn: get_attr(body, "/cas:cn")}
-    |> %User{user | eduPersonPrincipalName: get_attr(body, "/cas:eduPersonPrincipalName")}
   end
 
   defp assign_attrs(attrs, _body, []), do: attrs
