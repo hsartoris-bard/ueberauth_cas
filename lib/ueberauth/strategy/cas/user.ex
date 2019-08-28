@@ -31,6 +31,8 @@ defmodule Ueberauth.Strategy.CAS.User do
 
   def from_xml(body) do
     body |> IO.inspect
+    opts = assign_attrs(%{}, body, Map.keys(attr_map()))
+    IO.inspect opts
     %User{}
     |> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
 
