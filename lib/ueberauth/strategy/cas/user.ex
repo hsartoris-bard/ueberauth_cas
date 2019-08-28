@@ -42,16 +42,28 @@ defmodule Ueberauth.Strategy.CAS.User do
   def from_xml(body) do
     body |> IO.inspect
     #opts = assign_attrs(%{}, body, Map.keys(attr_map()))
-    opts = %{user: get_attr(body, "cas:user")}
-    IO.inspect opts
+    #opts = %{user: get_attr(body, "cas:user")}
+    #opts |> IO.inspect opts
     %User{}
-    |> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
+    |> set_attrs(body)
+    IO.inspect("Got here")
+    #|> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
 
     #%User{}
     #|> set_name(body)
     #|> set_email(body)
     #|> set_roles(body)
   end
+
+  defp set_attrs(user, body) do
+    user
+    |> %User{user | user: get_attr(body, "/cas:uid")}
+    |> %User{user | employeeType: get_attr(body, "/cas:employeeType")}
+    |> %User{user | mail: get_attr(body, "/cas:mail")}
+    |> %User{user | givenName: get_attr(body, "/cas:givenName")}
+    |> %User{user | sn: get_attr(body, "/cas:sn")}
+    |> %User{user | cn: get_attr(body, "/cas:cn")}
+    |> %User{user | eduPersonPrincipalName: get_attr(body, "/cas:eduPersonPrincipalName")}
 
   defp assign_attrs(attrs, _body, []), do: attrs
   defp assign_attrs(attrs, body, [key | tail]) do
