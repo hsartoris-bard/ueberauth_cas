@@ -28,7 +28,7 @@ defmodule Ueberauth.Strategy.CAS.User do
     %{
       :principal => "cas:user",
       :employeeType => "/cas:employeeType",
-      :email => "/cas:mail",
+      :mail => "/cas:mail",
       :first_name => "/cas:givenName",
       :last_name => "/cas:sn",
       :name => "/cas:cn",
