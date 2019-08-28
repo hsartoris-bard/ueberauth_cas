@@ -5,14 +5,24 @@ defmodule Ueberauth.Strategy.CAS.User do
   Representation of a CAS user with their roles.
   """
 
-  defstruct principal: nil, 
-    employeeType: nil, 
-    email: nil, 
-    first_name: nil, 
-    last_name: nil, 
-    name: nil,
+  #defstruct principal: nil, 
+  #  employeeType: nil, 
+  #  email: nil, 
+  #  first_name: nil, 
+  #  last_name: nil, 
+  #  name: nil,
+  #  eduPersonPrincipalName: nil,
+  #  nickname: nil
+  defstruct [
+    user: nil,
+    employeeType: nil,
+    mail: nil,
+    givenName: nil,
+    sn: nil,
+    cn: nil,
     eduPersonPrincipalName: nil,
-    nickname: nil
+    uid: nil
+  ]
 
   defp attr_map do
     %{
@@ -31,7 +41,8 @@ defmodule Ueberauth.Strategy.CAS.User do
 
   def from_xml(body) do
     body |> IO.inspect
-    opts = assign_attrs(%{}, body, Map.keys(attr_map()))
+    #opts = assign_attrs(%{}, body, Map.keys(attr_map()))
+    opts = %{user: get_attr(body, "cas:user")}
     IO.inspect opts
     %User{}
     |> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
