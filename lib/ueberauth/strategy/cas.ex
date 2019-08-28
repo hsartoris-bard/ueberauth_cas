@@ -122,7 +122,6 @@ defmodule Ueberauth.Strategy.CAS do
   end
 
   defp handle_validate_ticket_response({:ok, %CAS.User{} = user}, conn) do
-    conn |> IO.inspect
     conn
     |> put_private(:cas_user, user)
   end
