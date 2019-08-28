@@ -5,14 +5,6 @@ defmodule Ueberauth.Strategy.CAS.User do
   Representation of a CAS user with their roles.
   """
 
-  #defstruct principal: nil, 
-  #  employeeType: nil, 
-  #  email: nil, 
-  #  first_name: nil, 
-  #  last_name: nil, 
-  #  name: nil,
-  #  eduPersonPrincipalName: nil,
-  #  nickname: nil
   defstruct [
     uid: nil,
     employeeType: nil,
@@ -36,8 +28,6 @@ defmodule Ueberauth.Strategy.CAS.User do
         }
       end
     )
-
-    IO.inspect(opts)
     
     %User{} |> struct(opts)
   end
