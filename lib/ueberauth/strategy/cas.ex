@@ -61,7 +61,7 @@ defmodule Ueberauth.Strategy.CAS do
   end
 
   @doc "Ueberauth UID callback."
-  def uid(conn), do: conn.private.cas_user.email
+  def uid(conn), do: conn.private.cas_user.uid
 
   @doc """
   Ueberauth extra information callback. Returns all information the CAS
@@ -82,8 +82,10 @@ defmodule Ueberauth.Strategy.CAS do
     user = conn.private.cas_user
 
     %Info{
-      name: user.name,
-      email: user.email
+      name: user.cn,
+      email: user.mail,
+      first_name: user.givenName,
+      last_name: user.sn,
     }
   end
 
