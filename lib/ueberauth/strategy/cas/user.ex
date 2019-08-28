@@ -43,9 +43,18 @@ defmodule Ueberauth.Strategy.CAS.User do
     #opts = assign_attrs(%{}, body, Map.keys(attr_map()))
     #opts = %{user: get_attr(body, "cas:user")}
     #opts |> IO.inspect opts
+    opts = Enum.map(attr_map(),
+      fn ({key, value}) ->
+        {key, get_attr(body, value)}
+      end
+    )
+
+    IO.inspect(opts)
+    
     %User{}
     #|> set_attrs(body)
-    |> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
+    #|> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
+    |> struct(opts)
 
     #%User{}
     #|> set_name(body)
