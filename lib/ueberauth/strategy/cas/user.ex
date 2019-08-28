@@ -40,13 +40,11 @@ defmodule Ueberauth.Strategy.CAS.User do
   alias Ueberauth.Strategy.CAS.User
 
   def from_xml(body) do
-    body |> IO.inspect
     #opts = assign_attrs(%{}, body, Map.keys(attr_map()))
     #opts = %{user: get_attr(body, "cas:user")}
     #opts |> IO.inspect opts
     %User{}
     |> set_attrs(body)
-    IO.inspect("Got here")
     #|> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
 
     #%User{}
