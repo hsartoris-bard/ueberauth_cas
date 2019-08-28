@@ -29,17 +29,19 @@ defmodule Ueberauth.Strategy.CAS.User do
 
   def from_xml(body) do
     body |> IO.inspect
-    %User{} |> assign_attrs(body, Map.keys(attr_map()))
+    %User{}
+    |> struct(assign_attrs(%{}, body, Map.keys(attr_map())))
+
     #%User{}
     #|> set_name(body)
     #|> set_email(body)
     #|> set_roles(body)
   end
 
-  defp assign_attrs(user, _body, []), do: user
-  defp assign_attrs(user, body, [key | tail]) do
+  defp assign_attrs(attrs, _body, []), do: attrs
+  defp assign_attrs(attrs, body, [key | tail]) do
     %{^key => value} = body
-    %User{user | String.to_atom(key) => get_attr(body, value)} 
+    %{attrs | key => get_attr(body, value)} 
     |> assign_attrs(body, tail)
   end
 
