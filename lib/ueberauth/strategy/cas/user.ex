@@ -64,6 +64,7 @@ defmodule Ueberauth.Strategy.CAS.User do
     |> %User{user | sn: get_attr(body, "/cas:sn")}
     |> %User{user | cn: get_attr(body, "/cas:cn")}
     |> %User{user | eduPersonPrincipalName: get_attr(body, "/cas:eduPersonPrincipalName")}
+  end
 
   defp assign_attrs(attrs, _body, []), do: attrs
   defp assign_attrs(attrs, body, [key | tail]) do
