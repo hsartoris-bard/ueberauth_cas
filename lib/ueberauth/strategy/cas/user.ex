@@ -38,7 +38,7 @@ defmodule Ueberauth.Strategy.CAS.User do
 
   defp assign_attrs(user, _body, []), do: user
   defp assign_attrs(user, body, [key | tail]) do
-    %{key => value} = body
+    %{^key => value} = body
     %User{user | key => get_attr(body, value)} |> assign_attrs(body, tail)
   end
 
