@@ -29,7 +29,7 @@ defmodule Ueberauth.Strategy.CAS.User do
 
   def from_xml(body) do
     body |> IO.inspect
-    %User{} |> assign_attrs(body, Map.keys(attr_map))
+    %User{} |> assign_attrs(body, Map.keys(attr_map()))
     #%User{}
     #|> set_name(body)
     #|> set_email(body)
@@ -38,7 +38,8 @@ defmodule Ueberauth.Strategy.CAS.User do
 
   defp assign_attrs(user, _body, []), do: user
   defp assign_attrs(user, body, [key | tail]) do
-    %User{user | key => get_attr(body, key)} |> assign_attrs(body, tail)
+    %{key => value} = body
+    %User{user | key => get_attr(body, value)} |> assign_attrs(body, tail)
   end
 
   defp get_attr(body, attr), do: body |> xpath(~x"//#{attr}/text()")
