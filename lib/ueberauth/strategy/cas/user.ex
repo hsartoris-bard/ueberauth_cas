@@ -8,6 +8,7 @@ defmodule Ueberauth.Strategy.CAS.User do
   alias Ueberauth.Strategy.CAS.User
 
   def from_xml(body) do
+    body |> IO.inspect
     %User{}
     |> set_name(body)
     |> set_email(body)
